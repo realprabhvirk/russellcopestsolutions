@@ -1,0 +1,291 @@
+# Russell & Co Pest Solutions - Website Build Brief
+
+Paste this entire document into Claude Code as your first message in a fresh session, in this project's folder. Don't summarize it, execute it. Before writing any code: run the repo check in 4.1, then confirm `images/logo.png` exists (see 4.3).
+
+---
+
+## 4.1 Role, Project Overview and Ground Rules
+
+You are building a real, paid-studio-quality website for a real, licensed pest control business in South East Queensland. This is not a template exercise. If the finished site could have another pest company's name swapped in and still work, it is not done.
+
+> **Working directory rule (non-negotiable):** Work entirely inside the root folder this Claude Code session is already running in. Do not create a new project folder inside Downloads, OneDrive, Desktop, or anywhere else - this session's current folder IS the project root. All files, images, and assets for Russell & Co Pest Solutions live inside it, and nothing gets written outside it unless you're explicitly told otherwise mid-session.
+
+### Git and deployment rule (check this first)
+
+1. Run `git rev-parse --is-inside-work-tree` and `git remote -v`.
+2. **If this folder is a GitHub repo:** work directly on `main`. No feature branches, no pull requests. Commit and push everything to `origin main` after every meaningful change and again at the end of the session. Never leave work unpushed.
+3. **No preview URLs, ever.** Do not create preview deployments, do not run or link Vercel/Netlify/GitHub Pages previews, do not share any preview links. Push to main and stop there.
+4. **If this folder is NOT a GitHub repo:** disregard rules 2 and 3 entirely. Just create and update the website files in this folder.
+
+### Absolute copy rule: no em dashes
+
+The long dash character must not appear anywhere on the website. That means page copy, headings, buttons, meta descriptions, page titles, Open Graph tags, JSON-LD, alt text, aria-labels, HTML comments, CSS comments and JS comments. Normal hyphens (-) are fine. Do not use en dashes either: write "9 to 5", not a dash between numbers. Do not use the HTML entities `&mdash;` or `&#8212;` and do not use the `\u2014` escape. Verification command is in 4.11 and must pass before the final push.
+
+### The angle to lean on
+
+There is no long origin story to lean on, and nothing gets invented to fake one. The real angle is what the business actually has and can prove:
+
+- A licence number printed on everything: **PMT010768922**
+- A **5.0 star Google rating from 91 reviews** (seen live on their Google Maps listing)
+- A named human on the other end of the phone: **Darren**
+- One phone number that is the whole business: **0433 355 980**
+
+The brand already does this on its own business card: enormous phone number, licence number underneath, three contact lines, nothing else. The site copies that confidence. Direct, uncluttered, call-first. A tradesperson's site, not an agency's.
+
+---
+
+## 4.2 Client Snapshot
+
+Business type: **mobile service business with no fixed address** (Type B). No map, no pin.
+
+| Item | Detail | Source |
+|---|---|---|
+| Trading name | Russell & Co Pest Solutions (logo lockup: RUSSELL&CO over PEST SOLUTIONS) | Logo / Google listing |
+| Category | Pest control service | Google listing |
+| Licence number | PMT010768922 | Printed on logo card |
+| Phone | 0433 355 980 | Logo card + Google listing (match) |
+| Email | RUSSELLANDCOPESTSOLUTIONS@outlook.com (render lowercase on site) | Logo card |
+| Facebook | @Russell&CoPestSolutions | Logo card |
+| Instagram | @Russell&CoPestSolutions | Logo card |
+| Google rating | 5.0 from 91 reviews | Google Maps listing (verify again at launch) |
+| Address | None. Mobile service. No street address anywhere on the site. | Google listing shows no street address |
+| Service area | South East Queensland | Client instruction |
+| Person | Darren | Client instruction |
+| Hours | Not confirmed. Do NOT publish hours. | See open items |
+
+Service area detail: the Google listing draws a service-area outline running roughly from the Caboolture and Glass House Mountains area in the north, down through Brisbane and Logan to the Gold Coast and Tweed Heads, west to around Gatton and Laidley. Use this to write the service-area statement in 4.6. Do not claim suburbs that are not named by the client.
+
+Everything marked in 4.12 is unconfirmed. If it is not in the table above, treat it as unknown.
+
+---
+
+## 4.3 Assets: Logo and Images
+
+### Logo
+
+- The real logo is the black wordmark **RUSSELL&CO** in a heavy, high-contrast display serif, with **PEST SOLUTIONS** beneath it in thin, widely letter-spaced capitals.
+- The client's logo card should be saved at `images/logo.png` (transparent or white background) before this session starts. Check that it exists with `ls images`.
+- If it exists: use it exactly as-is in the header and footer. No redrawing, no re-typing it, no reinterpreting. Sample the black straight from the file.
+- If it is missing: stop and ask the user to drop it into `/images`. Do not proceed to invent a logo. If the user says to continue anyway, build a plain typographic wordmark in the fonts from 4.5 and mark it with an HTML comment `<!-- FALLBACK WORDMARK: replace with real logo -->`.
+- Make a second crop of just the lockup (no phone, no socials) as `images/logo-lockup.png` for the header, and keep the full card as `images/business-card.png` for reference only. Do not display the full card on the site.
+- Also generate a favicon from the logo (an R monogram cropped from the real lettering, black on white). Do not draw a new mark.
+
+### Photos
+
+- There is no confirmed folder of job photos. Do not use stock photos.
+- Step 1: if a browser tool is available, try the business's own Facebook page and Instagram (their own photos of their own work are fair game for their own site). If those are blocked or need a login, do not work around it.
+- Step 2: if no real photos are obtainable, **build the site fully typographic.** The design in 4.5 is deliberately type-led, so it does not depend on photography. Do not leave empty image boxes or grey placeholders on the live pages.
+- If the user later adds photos to `/images`, run this mini pipeline: inventory each file, rename to `lowercase-kebab-case-describing-what-it-shows.jpg` (never `IMG_1234.jpg`), generate `.webp` versions, write specific alt text per image, and flag in the final summary which images came from where so usage rights can be checked.
+- Use black and white treatment (CSS `filter: grayscale(1) contrast(1.1)`) on any real photo so it sits inside the monochrome system.
+
+---
+
+## 4.4 Required File Structure
+
+Exactly this, no more, no less:
+
+```
+index.html
+services.html
+about.html
+contact.html
+styles.css
+main.js
+/images
+```
+
+- Vanilla HTML, CSS and JS only. No framework, no build step, no npm dependency, no bundler.
+- One `styles.css` and one `main.js` shared by every page. No inline styles, no inline scripts, no per-page CSS or JS files.
+- Must work by double-clicking `index.html` and by dropping the folder on any static host.
+- Fonts load from Google Fonts via `<link>` with `display=swap`, plus sensible system fallbacks.
+- Include `robots.txt` and `sitemap.xml` ONLY if a live domain is confirmed. It is not, so skip both for now and list in open items.
+
+---
+
+## 4.5 Design Direction
+
+Avoid these clichés completely:
+
+- No warm-cream background with a terracotta/clay accent and a big serif headline.
+- No near-black background with a single neon-green or acid accent used everywhere.
+- No hairline-rule "broadsheet" layout with dense newspaper columns.
+- No centered hero with a gradient-blob background and a generic stock photo of unrelated smiling people.
+- No numbered "01 / 02 / 03" feature cards unless there's a real sequence being described.
+- No emoji in copy or UI, no generic icon-pack icons standing in for real photography.
+- No filler marketing copy - "world-class," "premier," "unlock your potential," "passionate about delivering excellence." Every claim needs to be something you could actually back up from the snapshot in 4.2.
+
+Also avoid: cartoon bugs, bug silhouettes, shield or checkmark badges, green "eco" leaf imagery, and anything that makes it look like a franchise.
+
+### Palette (strictly monochrome, taken from the logo)
+
+The logo is pure black on white. The site stays black and white. No accent colour. Define as CSS custom properties in `:root`:
+
+| Token | Value | Why it earns its place |
+|---|---|---|
+| `--ink` | `#0B0B0B` | The logo black. Text, hero blocks, buttons. |
+| `--paper` | `#FFFFFF` | The logo background. Main page colour. |
+| `--fog` | `#F2F2F2` | Alternate section background so sections separate without lines. |
+| `--graphite` | `#2A2A2A` | Hover and pressed states on black surfaces, footer detail. |
+| `--ash` | `#6B6B6B` | Secondary text only. Check AA contrast on `--paper` and `--fog`. |
+| `--rule` | `#D9D9D9` | The few dividers that exist. |
+
+Contrast is the whole look: huge black blocks against clean white, with confident negative space. No gradients, no shadows heavier than a soft 1px-style lift on buttons.
+
+### Typography
+
+- **Display: Abril Fatface** (fallback `"Playfair Display"` 900, then Georgia). It matches the heavy, high-contrast serif of the RUSSELL&CO wordmark, so headings feel like part of the same brand. Use it for the H1, H2 and the ampersand.
+- **Body and UI: Montserrat** (400, 500, 700, 800). It matches the bold geometric numerals of the phone number on their card. Use weight 800 for phone numbers.
+- **Eyebrow labels:** Montserrat 500, uppercase, `letter-spacing: 0.4em`, small size. This copies the spaced-out PEST SOLUTIONS line in the logo. Use it for section labels.
+- Fluid type with `clamp()`. Headlines tight (`line-height: 0.95` to `1.05`), body relaxed (`1.6`).
+
+### Signature element (spend the boldness here, stay disciplined everywhere else)
+
+**The phone number as a poster.** On the home page hero, `0433 355 980` is set at enormous scale in Montserrat 800, filling most of the width, exactly like the business card. Above it the eyebrow line `LICENSED PEST CONTROL`, below it the licence line `LICENCE NO: PMT010768922` in regular weight. The number is a tap-to-call link. Everything else on the site is quiet and clean around that one loud moment.
+
+### Motion
+
+Sparse and deliberate only: a short fade-and-rise reveal on sections as they scroll in, and a clean colour-invert on button hover. Respect `prefers-reduced-motion` fully: when set, no animation or transition at all, not just reduced. No parallax, no marquee, no animated counters.
+
+### Quality floor (always)
+
+Fully responsive down to 360px wide, visible keyboard focus states on every interactive element (a 3px outline with offset, never removed), real descriptive alt text on every image, semantic HTML5 throughout (`header`, `nav`, `main`, `section`, `footer`, exactly one `h1` per page, correct heading order). Minimum 44px tap targets for call and SMS buttons.
+
+---
+
+## 4.6 Location and Service Area Handling
+
+This is a mobile business. **No map embed. No pin. No address.** Do not write a street address, suburb-as-HQ, or "visit us" language anywhere.
+
+Instead, build a service-area statement used on the home page and contact page:
+
+- Headline direction: **"Servicing South East Queensland."**
+- Support line (factual): the business comes to you, anywhere across the South East Queensland region.
+- Optionally name the major regions that fall inside the outline on their Google listing: Brisbane, Logan, the Gold Coast and Moreton Bay. Keep it to a single sentence. Do not build a long suburb list.
+- Add a line: "Not sure if we cover your suburb? Call or text and ask." This is true regardless of the exact boundary.
+- Visual treatment: a large typographic block (the words SOUTH EAST QUEENSLAND set big in Abril Fatface on a black section), not a map graphic.
+
+---
+
+## 4.7 Page-by-Page Content Brief
+
+### index.html
+
+1. **Header (all pages):** logo lockup left, nav (Services, About, Contact), and a solid black "Call" button right. On mobile the nav collapses into the accessible toggle from 4.9.
+2. **Hero:** signature poster phone number (see 4.5). Under it two large buttons side by side: **Call** (`tel:`) and **Text** (`sms:`). One short line above the number: "Licensed pest control across South East Queensland." No hero image. White background, black type.
+3. **Credentials strip:** a black band with three items in a row, set large: the licence number, "5.0 on Google from 91 reviews" linking to their Google Maps listing, and "South East Queensland". No icons. On mobile they stack. The rating line must carry a comment `<!-- VERIFY RATING AT LAUNCH -->`.
+4. **What we deal with:** six plain typographic tiles in a grid (names only, linking to the matching anchor on services.html): Ants, Cockroaches, Spiders, Termites, Rodents, Other pests. White tiles with a black hairline border that invert to black on hover. No numbering.
+5. **Meet Darren:** two or three sentences in a calm paragraph. "When you call or text, you are dealing with Darren." Do not state his role, surname, or years of experience. No quote, no photo.
+6. **Service area:** the typographic block from 4.6.
+7. **Closing call band:** full-width black section, headline in Abril Fatface: "Got a pest problem? Call or text." Phone number large again with the two buttons inverted (white buttons on black).
+8. **Footer (all pages):** logo, phone, email, licence number, Facebook and Instagram, service-area line, "Licence No: PMT010768922". No address, no hours, no copyright symbol games. Plain `(c)` is fine; year 2026.
+
+### services.html
+
+1. **Page header:** eyebrow `SERVICES`, H1 "What we treat." One sentence below: Call or text Darren to talk through your problem.
+2. **One section per category**, each with an anchor id matching the home page tiles (`#ants`, `#cockroaches`, `#spiders`, `#termites`, `#rodents`, `#other`). Each section: H2, then two or three plain sentences covering what the pest is, what the signs look like, and why it is worth getting looked at. Alternate section backgrounds (`--paper`, `--fog`). End each with a Call and Text pair.
+3. **Hard limits on this page:** only general, true statements about the pests. Do NOT claim: specific products or chemicals, "pet safe" or "child safe", guarantees or warranties, same-day service, response times, prices, quotes being free, inspection report formats, or any certification not listed in 4.2. If a claim is not in 4.2, it does not go on the page.
+4. **Termites section note:** keep it measured. Say it is worth having a licensed professional look at suspected activity. Do not describe their treatment method.
+5. Close with the black call band from the home page.
+
+### about.html
+
+1. **Header:** eyebrow `ABOUT`, H1 "Russell & Co Pest Solutions."
+2. **Who you deal with:** a short section on Darren and the business: a South East Queensland pest control service, licence PMT010768922, and that the work comes to your property. Keep it to about 100 words total. Do not invent a founding year, family history, or qualifications.
+3. **The licence:** a large display of `PMT010768922` with a one-line plain explanation that it is the business's licence number and customers can quote it when checking. Do not name an issuing body unless you can verify it (see 4.12).
+4. **Reviews:** a block saying the business holds a 5.0 rating from 91 Google reviews, with a button "Read the reviews on Google" linking to the Google Maps listing (`https://www.google.com/maps/search/?api=1&query=Russell+%26+Co+Pest+Solutions`). No quoted reviews, ever, unless the user later pastes real ones.
+5. Closing call band.
+
+### contact.html
+
+1. **Header:** eyebrow `CONTACT`, H1 "Call or text Darren."
+2. **Three large contact rows**, each a full-width tappable block (black text on white, invert on hover): Call `0433 355 980` (`tel:+61433355980`), Text `0433 355 980` (`sms:+61433355980`), Email (`mailto:` the lowercase address).
+3. **Socials:** Facebook and Instagram handles. Link to the live profile URLs only if you can confirm them (see 4.12). If you cannot, show the handle as plain text with no link and no `#` href.
+4. **Service area:** the block from 4.6.
+5. **No form.** There is no backend. Do not build a contact form, do not add a fake submit button.
+6. **No hours.** Replace with the line "Call or text any time and Darren will get back to you." Only if you are comfortable it is not a promise; otherwise use "Call or text and Darren will get back to you."
+
+---
+
+## 4.8 Copy and Tone
+
+Write like a tradesperson who runs his own business, not an agency. Plain, active, specific. Short paragraphs. No adjective stacking. No exclamation marks. Every claim traces back to 4.2.
+
+Bad generic line: "We deliver world-class pest solutions tailored to your unique needs with unmatched professionalism."
+
+Good line for this business: "Licensed pest control across South East Queensland. Call or text Darren on 0433 355 980."
+
+Button language: "Call", "Text", "Email". Not "Get started", not "Learn more", not "Contact us today".
+
+No em dashes anywhere (see 4.1). Use a full stop or a comma instead.
+
+---
+
+## 4.9 main.js Required Functionality
+
+- Accessible mobile nav toggle: button with `aria-expanded` and `aria-controls`, keyboard operable, closes on outside click and on Escape, returns focus to the toggle on close.
+- Smooth scroll for on-page anchors (the services anchors), disabled when `prefers-reduced-motion: reduce`.
+- Scroll-triggered reveal using `IntersectionObserver`. When reduced motion is set, content simply shows with no animation. Content must also be visible if JavaScript fails (add the hidden state only via a class set by JS).
+- **Sticky mobile call bar:** on viewports under 768px, a fixed bottom bar with two equal buttons, Call and Text. Show it after the user scrolls past the hero. Hide it on the contact page, where those actions are already the whole page. Add bottom padding to the footer so the bar never covers content.
+- Active nav state for the current page via `aria-current="page"`.
+- **No form handling.** There is no backend and no form. Contact is click-to-call, SMS, email and socials only.
+- No libraries. No console errors.
+
+---
+
+## 4.10 Technical, SEO and Accessibility Checklist
+
+- Semantic HTML5 throughout; one `h1` per page; logical heading order.
+- Unique `<title>` and meta description per page, written plainly (no em dashes). Title pattern: `Page Name | Russell & Co Pest Solutions`.
+- Open Graph tags (`og:title`, `og:description`, `og:type`, `og:image`). For `og:image` generate a simple 1200x630 black-and-white image from the logo lockup and save it in `/images`.
+- Favicon and `apple-touch-icon` made from the real logo lettering.
+- **JSON-LD** on the home page: `PestControlService` (or `LocalBusiness`) with `name`, `telephone`, `email`, `areaServed` set to South East Queensland, `sameAs` with only verified social URLs, and `identifier` for the licence. Do NOT include `address`, `openingHours`, or `aggregateRating`.
+- `loading="lazy"` on below-the-fold images; `<picture>` with `.webp` where raster images exist.
+- Alt text on every image; `aria-label` on every icon-only control.
+- Visible focus outlines never suppressed.
+- WCAG AA contrast checked on the actual palette, including `--ash` text.
+- `tel:` and `sms:` links use international format `+61433355980`.
+- `lang="en-AU"` on every `<html>`.
+- No console errors, no broken links, no unused CSS at handoff.
+- No tracking scripts, no cookie banner needed.
+
+---
+
+## 4.11 Definition of Done
+
+Do not finish until every box is true:
+
+- [ ] Repo check done. If a GitHub repo: everything committed and pushed to `origin main`, no branches, no PRs, no preview URLs created or shared. If not a repo: files updated in the folder and that is all.
+- [ ] Em dash scan passes. Run this from the project root and confirm it prints `0 em/en dashes found` (grep -P breaks in some locales, so use Python): `python3 -c "import pathlib;b=[(str(f),i+1) for f in pathlib.Path('.').rglob('*') if f.suffix in {'.html','.css','.js','.xml','.json'} for i,l in enumerate(f.read_text(encoding='utf-8').splitlines()) if any(x in l for x in ('\u2014','\u2013','&mdash;','&ndash;','&#8212;','&#8211;'))];print(b or '0 em/en dashes found')"`
+- [ ] Real logo from `images/logo.png` used exactly as supplied in header and footer.
+- [ ] Palette is black and white only, defined as `:root` tokens, no accent colour sneaked in.
+- [ ] The phone number poster is the hero. It is a working `tel:` link.
+- [ ] Call and Text buttons work on every page. Sticky call bar works under 768px.
+- [ ] No map, no street address, no opening hours, no form, anywhere.
+- [ ] Licence number appears as `PMT010768922` in footer, credentials strip and about page, spelled identically everywhere.
+- [ ] 5.0 / 91 reviews appears only as a number linked to Google, never as quoted reviews.
+- [ ] No invented claims: no prices, guarantees, response times, product names, safety claims or years in business.
+- [ ] Tested at 360px, 768px and 1280px. No horizontal scroll at any width.
+- [ ] Keyboard: tab through every page, nav toggle opens and closes with keyboard, focus is always visible.
+- [ ] Reduced motion tested: zero animation.
+- [ ] No lorem ipsum, no "TODO" text visible on the page.
+- [ ] Gut check: if you can picture this exact layout working for a different pest company with a name and logo swap, revise it. The enormous phone number and the licence line must make it unmistakably theirs.
+- [ ] Final reply to the user lists anything from 4.12 that is still open.
+
+---
+
+## 4.12 Open Items to Confirm With the Client Before Launch
+
+Nothing below is assumed as fact anywhere in the build. Flag each one in your final message.
+
+1. **Darren's role and details.** The brief only knows his first name. Confirm whether he is the owner, lead technician or both, plus surname and years in the trade, before adding any of that to the About page.
+2. **What Russell is.** The business name suggests a surname or founder called Russell, but nothing confirms who or what it refers to. Do not mention "Russell" as a person anywhere.
+3. **Services list.** The six categories (ants, cockroaches, spiders, termites, rodents, other pests) are standard pest control categories, not confirmed services. Confirm exactly what they treat, and whether they offer inspections, commercial work, or anything else.
+4. **Opening hours and response times.** The Google listing shows a 7am opening time but full hours are unconfirmed. Not published.
+5. **Service area boundary.** "South East Queensland" is client-stated. The regions named in 4.6 are inferred from the outline on their Google listing. Confirm Brisbane, Logan, Gold Coast and Moreton Bay are all correct, and whether Ipswich, the Lockyer Valley or Sunshine Coast should be added.
+6. **Google rating.** 5.0 from 91 reviews was read from a Google Maps screenshot. Re-check the live number the day the site launches and update if it changed.
+7. **Licence.** PMT010768922 is as printed on the business card. Check it against the official licence register and confirm the issuing body name before it is mentioned in copy.
+8. **Social profile URLs.** Handles are known (@Russell&CoPestSolutions) but the exact live URLs for Facebook and Instagram were not verifiable (both block automated access). Confirm the URLs and add the links.
+9. **Photography.** No job photos were available, so the site is type-led with no imagery. Ask Darren for real job photos (the Google listing shows a black and white photo of a damaged timber frame behind the logo, so some exist). Check he owns the rights to anything used.
+10. **Email address.** Taken from the business card and rendered in lowercase. Confirm it is monitored.
+11. **Domain.** No domain exists in the brief. `robots.txt`, `sitemap.xml`, canonical tags and the `og:url` value need adding once one is chosen.
+12. **Business registration details.** No ABN or company name was provided. None appears on the site. Add if the client wants it in the footer.
